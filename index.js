@@ -220,6 +220,13 @@ function parseSF (lcov, prefixSplit) {
   return currentCoverageFile
 }
 
+function nanToEmpty (number) {
+  if (isNaN(number)) {
+    return ''
+  }
+  return number
+}
+
 /**
  * Parses a DA section
  *
@@ -228,8 +235,8 @@ function parseSF (lcov, prefixSplit) {
  */
 function parseDA (currentCoverageFile, prefixSplit) {
   var numberSplit = splitNumbers(prefixSplit)
-  var lineNumber = parseInt(numberSplit[0], 10)
-  var hits = parseInt(numberSplit[1], 10)
+  var lineNumber = nanToEmpty(parseInt(numberSplit[0], 10))
+  var hits = nanToEmpty(parseInt(numberSplit[1], 10))
 
   var existingDA = findDA(currentCoverageFile.DARecords, lineNumber)
   if (existingDA) {
@@ -248,9 +255,9 @@ function parseDA (currentCoverageFile, prefixSplit) {
  */
 function parseBRDA (currentCoverageFile, prefixSplit) {
   var numberSplit = splitNumbers(prefixSplit)
-  var lineNumber = parseInt(numberSplit[0], 10)
-  var blockNumber = parseInt(numberSplit[1], 10)
-  var branchNumber = parseInt(numberSplit[2], 10)
+  var lineNumber = nanToEmpty(parseInt(numberSplit[0], 10))
+  var blockNumber = nanToEmpty(parseInt(numberSplit[1], 10))
+  var branchNumber = nanToEmpty(parseInt(numberSplit[2], 10))
 
   var existingBRDA = findBRDA(currentCoverageFile.BRDARecords,
     blockNumber, branchNumber, lineNumber)
